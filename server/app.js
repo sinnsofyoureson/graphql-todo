@@ -10,15 +10,13 @@ const PORT = 4000;
 
 const data = { todos };
 
-/*
- * Use code below if you have configured MongoDB
- *
- * mongoose.connect("mongodb://", { useMongoClient: true });
- * app.use("/graphql", graphqlHTTP({ schema, graphiql: true }));
- * const dbConnection = mongoose.connection;
- * dbConnection.on("error", (error) => console.log("DB connection error", error));
- * dbConnection.once("open", () => "DB connection established!");
- */
+//  Use code below if you have configured MongoDB
+//
+//  mongoose.connect("mongodb://", { useNewUrlParser: true });
+//  app.use("/graphql", graphqlHTTP({ schema, graphiql: true }));
+//  const dbConnection = mongoose.connection;
+//  dbConnection.on("error", (error) => console.log("DB connection error", error));
+//  dbConnection.once("open", () => "DB connection established!");
 
 // Use this for fake GraphQl database
 app.use("/graphql", jsonGraphqlExpress.default(data));
