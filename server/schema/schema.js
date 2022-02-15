@@ -4,6 +4,7 @@ const {
   GraphQLSchema,
   GraphQLID,
   GraphQLInt,
+  GraphQLList,
 } = require("graphql");
 const { movies, directors } = require("./mocks");
 
@@ -28,6 +29,12 @@ const DirectorType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     age: { type: GraphQLInt },
+    movies: {
+      type: new GraphQLList(MovieType),
+      resolve(parent, ars) {
+        return movies.filter((movie) => movie.directorId === parent.id);
+      },
+    },
   }),
 });
 
@@ -41,11 +48,23 @@ const Query = new GraphQLObjectType({
         return movies.find((movie) => movie.id == args.id);
       },
     },
+    getMoviesList: {
+      type: new GraphQLList(MovieType),
+      resolve(_parent, _args) {
+        return movies;
+      },
+    },
     getDirector: {
       type: DirectorType,
       args: { id: { type: GraphQLID } },
       resolve(_parent, args) {
         return directors.find((director) => director.id == args.id);
+      },
+    },
+    getDirectorsList: {
+      type: new GraphQLList(DirectorType),
+      resolve(_parent, _args) {
+        return directors;
       },
     },
   },
